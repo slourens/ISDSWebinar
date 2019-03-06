@@ -6,7 +6,6 @@
 ## selenium-server-standalone-x.xx.x.jar
 
 library(RSelenium)
-library(XML)
 ## for applying over lists/vectors
 library(purrr)
 ## for some string manipulations - cleaning up scraped data
@@ -135,15 +134,26 @@ extractDemographics <- function(state = "Indiana", county = "Marion")
   ## select county select input
   ## need error catching here
   countySelectLink <- tryCatch({
-    rD$findElement(using = "css", "#main > div.ng-scope > div > a")}, 
+    rD$findElement(using = "css", "#app-wrapper > div.app-header.nav.clearfix.ng-scope > div:nth-child(2) > div > a")}, 
     error = function(e) {"not found!"})
+  
+  ## this link shows up one of two ways - try both
+  i <- 1
+  
   
   while (identical(countySelectLink, "not found!"))
   {
     Sys.sleep(1)
-    countySelectLink <- tryCatch({
-      rD$findElement(using = "css", "#main > div.ng-scope > div > a")
-    }, error = function(e) {"not found!"})
+    if (i %% 2 == 1)
+    {
+      countySelectLink <- tryCatch({
+        rD$findElement(using = "css", "#main > div.ng-scope > div > a")
+      }, error = function(e) {"not found!"})      
+    } else {
+      countySelectLink <- tryCatch({
+        rD$findElement(using = "css", "#app-wrapper > div.app-header.nav.clearfix.ng-scope > div:nth-child(2) > div > a")}, 
+        error = function(e) {"not found!"})      
+    }
   }
   
   ## make search box visible
@@ -195,6 +205,8 @@ extractDemographics <- function(state = "Indiana", county = "Marion")
 extractDemographics("Indiana", "Hamilton")
 extractDemographics("Indiana", "Marion")
 extractDemographics("Indiana", "Martin")
+extractDemographics("Alabama", "Barbour")
+
 
 ## Fun, but what next? We likely want more than demographics
 
