@@ -1,8 +1,9 @@
 library(httr)
 library(jsonlite)
-library(rHealthDataGov)
 ## Instead of lapply, purrr can be much faster
 library(purrr)
+## for string manipulation
+library(stringr)
 
 ## healthdata.gov/api is open - keys are not necessary to access
 
@@ -42,7 +43,7 @@ indNumber <- which(titles == "Value of care -  National")
 dataset <- GET(distributionInfo[[indNumber]][[3]]$accessURL)
 
 ## 
-DSContents <- content(dataset, as = "parsed")
+DSContents <- content(dataset)
 
 ## don't want to lose NULL values - messes up the program later
 DSContdat <- map(DSContents$data, function(t) {map(t, function(u) {
@@ -55,7 +56,15 @@ DSContdat <- map(DSContents$data, function(t) {map(t, function(u) {
 
 DSTab <- as.data.frame(do.call('rbind', map(DSContdat, function(t) unlist(t))))
 
-## notice the additional columns? Let's see if we can figure out why...
+## notice the additional columns? Let's see if we can figure out why... 
+## What do I mean additional columns? Each time you navigate to a web page, you're actually
+## conducting a GET request, requesting the content at the URL endpoint you typed into the browser,
+## SOOO, let's try the CSV endpoint for the data we're requesting:
+## modifying distributionInfo[[indNumber]][[3]]$accessURL to be for csv:
+## "https://data.medicare.gov/api/views/gbq5-7hzr/rows.csv?accessType=DOWNLOAD"
+## This downloads the file, let's compare DSTab to the csv version
+
+## SO, why the extra columns?
 DSContents$meta$view$columns[[1]]$flags ## 'hidden'!
 DSContents$meta$view$columns[[9]]$flags ## not there!
 
@@ -70,10 +79,14 @@ colNames <- map_chr(DSContents$meta$view$columns, function(t) t$name)
 colNames <- colNames[flagsToInclude]
 names(DSTab) <- colNames
 
-## Make a function
-createHDGData <- function(title, type = "json")
+## Make a function - let's abstract this so you don't need to go through the entire process
+## as above - it's a lot to keep straight in a short webinar!
+createHDGData <- function(title)
 {
-  ## inefficient but puts everything in one area :)
+  ## can be extended for further types by specifying type argument above
+  type <- "json"
+  
+  ## inefficient but puts everything in one function/area :)
   datasetInfo <- content(GET("https://healthdata.gov/data.json"))$dataset
   distributionInfo <- map(datasetInfo, function(t) {t$distribution})
   indNumber <- which(titles == title)
@@ -92,10 +105,15 @@ createHDGData <- function(title, type = "json")
   
   ## don't want to lose NULL values - messes up the program later
   DSContdat <- map(DSContents$data, function(t) {map(t, function(u) {
-    if (is.null(u)) {
-      u <- NA
+    if (is.list(u))
+    {
+      u <- ifelse(is.null(u[[1]]), NA, u[[1]])
     } else {
-      u
+      if (is.null(u)) {
+        u <- NA
+      } else {
+        u
+      }
     }
   })})
   

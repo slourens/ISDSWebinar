@@ -39,6 +39,10 @@ knitr::opts_chunk$set(echo = FALSE)
     - **rvest** and **RSelenium** are used for this
 - This webinar will be as interactive as possible - I'll do a lot of live demos, so cross your fingers!
 
+## Prelims
+- The scripts used in this presentation and the presentation (and .Rmd which generated it) are available on github:
+- https://github.com/slourens/ISDSWebinar
+
 ## Web APIs
 - There are thousands of web APIs available over the internet for accessing data for use in our own applications
 - API - application programming interface - so basically an interace that allows YOU to program your own application utilizing external resources (data)
@@ -48,5 +52,40 @@ knitr::opts_chunk$set(echo = FALSE)
     - Google search for "r <website name> API"
     
 ## First Example - healthdata.gov API
-- asdfsa
+- First, let's use the healthdata.gov API to extract data
+- Navigate to: https://healthdata.gov/api
+- We'll only use the data.json API exposed by healthdata.gov:
+    - https://www.healthdata.gov/data.json
+- healthdata.gov uses DKAN, whose documentation can be found here:
+    - https://docs.getdkan.com/en/latest/apis/
+- Many APIs require authentication, using access keys and secrets to prove you are who you say you are whenever you interact with the API - healthdata.gov has an open API, so you're not requireed to use access keys/secrets
+- Reading through the documentation and experimenting with downloading / scripting API calls is usually necessary to understand how an API works - this takes time, but saves A LOT of time later
+- There is a script available for us to go through that shows how to use this API: healthDataGOVAPI.R:
+
+## To the Script!
+- To the Script! Demo the API calls, created functions
+
+## Scraping Static Content
+- Let's do some examples - we'll use **rvest** (sounds like harvest when you pronounce it)
+- Allows grabbing the HTML document from a web address and parsing it to extract data
+- Works GREAT if the data is a part of the HTML document and not loaded through javascript, PHP, or another server-side request on page load
+- We'll demonstrate with the https://airquality.weather.gov website
+- Off to rvestExample.R!
+
+## XPath and CSS Selectors
+- These two topics are both very fun and sometimes incredibly frustrating
+- The document object model, i.e. DOM, is the structure of any web page on the internet - however, some websites use iframes, and other nested structures to embed content, so you have to approach each domain on a case by case basis
+- What we do in this webinar will not automatically work on another website - BUT it will almost always work for other pages within the domain you've been learning on
+- This means that other airquality.weather.gov URLs will be simple for us to scrape now, other calls to the healthdata.gov API should be simple for us to interact with (although the API access function is rudimentary and has not been thoroughly tested - it's just a starting point for further exploration, hopefully)
+- At any rate, you can learn more at: 
+    - (CSS) - https://www.w3schools.com/cssref/css_selectors.asp
+    - (XPath) - https://www.w3schools.com/xml/xpath_intro.asp
+    
+## Scraping Dynamic Content
+- In a lot of the examples I'm interested in (scraping job postings for data scientists, extracting financial data, etc.), the content is dynamically generated as a user interacts with a web page
+- Consider the zillow website - you go to the main page, enter a city / state, or navigate directly to the city/state website, then interact with a UI to choose whether you want to rent, buy, and the characteristics / criteria you want your future abode to satisfy
+- This leads to a bunch of dynamic changes to the content displayed on the website occurring, i.e. it leads to dynamic content generation
+- In this case **rvest** is not an option, we need to use a more robust web scraping technology - one option is Selenium Web Driver, which has been ported into R through the RSelenium package, and is our last example we'll go through today!
+- If you want to use RSelenium, I'd first go to the following page to get RSelenium installed: 
+
 

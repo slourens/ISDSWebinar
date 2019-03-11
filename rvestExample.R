@@ -8,11 +8,16 @@ library(rvest)
 
 site <- read_html("https://airquality.weather.gov/probe_aq_data.php?city=Indianapolis&state=IN&Submit=Get+Guidance")
 
+//*[@id="query"]/table/tbody/tr[2]/td/table[1]/tbody/tr/td[1]/table
+
 ## original xpath from browser - left-hand table
 site %>% html_nodes(xpath = "//*[@id='query']/table/tbody/tr[2]/td/table[1]/tbody/tr/td[1]/table")
 
 ## modified xpath (removing tbody portions)
 site %>% html_nodes(xpath = "//*[@id='query']/table/tr[2]/td/table[1]/tr/td[1]/table")
+
+##site %>% html_node(xpath = "//*[@id='query']/table/tr[2]/td/table[1]/tr/td[1]/table")
+
 
 ## create a dataframe easily with html_table() - any html table should do, for the most part
 lhDF <- (site %>% html_nodes(xpath = "//*[@id='query']/table/tr[2]/td/table[1]/tr/td[1]/table"))[[1]] %>% html_table()
