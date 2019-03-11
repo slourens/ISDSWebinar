@@ -261,7 +261,7 @@ countySelectLink$clickElement()
 
 ## extract all county names
 ## remember the selector can be #ui-select-choices, #ui-select-choices-3, etc.
-counties <- rD$findElements(using = "css", "#ui-select-choices-4 > li > div > span")
+counties <- rD$findElements(using = "css", "#ui-select-choices-3 > li > div > span")
 
 counties <- map_chr(counties, function(t) {t$getElementAttribute("innerHTML")[[1]]})
 
@@ -284,8 +284,8 @@ extractHB <- function(state = "Indiana", county = "Marion")
   Sys.sleep(1)
   ## select county select input
   ## need error catching here
-  countySelectLink <- tryCatch({
-    rD$findElement(using = "css", "#app-wrapper > div.app-header.nav.clearfix.ng-scope > div:nth-child(2) > div > a")}, 
+  countySelectLink <- tryCatch({suppressMessages({
+    rD$findElement(using = "css", "#app-wrapper > div.app-header.nav.clearfix.ng-scope > div:nth-child(2) > div > a")})}, 
     error = function(e) {"not found!"})
   
   ## this link shows up one of two ways - try both
@@ -296,12 +296,12 @@ extractHB <- function(state = "Indiana", county = "Marion")
     Sys.sleep(1)
     if (i %% 2 == 1)
     {
-      countySelectLink <- tryCatch({
+      countySelectLink <- tryCatch({suppressMessages({
         rD$findElement(using = "css", "#main > div.ng-scope > div > a")
-      }, error = function(e) {"not found!"})      
+      })}, error = function(e) {"not found!"})      
     } else {
-      countySelectLink <- tryCatch({
-        rD$findElement(using = "css", "#app-wrapper > div.app-header.nav.clearfix.ng-scope > div:nth-child(2) > div > a")}, 
+      countySelectLink <- tryCatch({suppressMessages({
+        rD$findElement(using = "css", "#app-wrapper > div.app-header.nav.clearfix.ng-scope > div:nth-child(2) > div > a")})}, 
         error = function(e) {"not found!"})      
     }
     i <- i + 1
@@ -325,12 +325,12 @@ extractHB <- function(state = "Indiana", county = "Marion")
   Sys.sleep(1)
   
   ## notice that it takes time to load - can get an error if we're not careful!
-  HBtbody <- tryCatch(rD$findElement(using = "css", "#main-inner-wrapper > div.content.ng-scope > div > table > tbody.component-body.component-id-3-body"), error = function(e) {"not found!"})
+  HBtbody <- tryCatch({suppressMessages({rD$findElement(using = "css", "#main-inner-wrapper > div.content.ng-scope > div > table > tbody.component-body.component-id-3-body")})}, error = function(e) {"not found!"})
   
   while(identical(HBtbody, "not found!"))
   {
     Sys.sleep(1)
-    HBtbody <- tryCatch(rD$findElement(using = "css", "#main-inner-wrapper > div.content.ng-scope > div > table > tbody.component-body.component-id-3-body"), error = function(e) {"not found!"})
+    HBtbody <- tryCatch({supressMessages({rD$findElement(using = "css", "#main-inner-wrapper > div.content.ng-scope > div > table > tbody.component-body.component-id-3-body")})}, error = function(e) {"not found!"})
   }
   
   HBRows <- HBtbody$findChildElements(using = "css", "tr ")
@@ -344,12 +344,12 @@ extractHB <- function(state = "Indiana", county = "Marion")
     ## td 1, 3, and 7 are what we want
     name <- entries[[1]]$findChildElement(using = "css", "a > span")$getElementAttribute("innerHTML")[[1]]
     ## county is sometimes div > span (if no %), otherwise div > div
-    countyVal <- tryCatch({entries[[3]]$findChildElement(using = "css", 
-                                            "div > div")$getElementAttribute('innerHTML')[[1]]}, error = function(e) {"not found!"})
+    countyVal <- tryCatch({suppressMessages({entries[[3]]$findChildElement(using = "css", 
+                                            "div > div")$getElementAttribute('innerHTML')[[1]]})}, error = function(e) {"not found!"})
     if (identical(countyVal, "not found!"))
     {
-      countyVal <- tryCatch({entries[[3]]$findChildElement(using = "css", 
-                                                        "div > span")$getElementAttribute('innerHTML')[[1]]}, error = function(e) {"not found!"})
+      countyVal <- tryCatch({suppressMessages({entries[[3]]$findChildElement(using = "css", 
+                                                        "div > span")$getElementAttribute('innerHTML')[[1]]})}, error = function(e) {"not found!"})
     }
     stateVal <- entries[[7]]$getElementAttribute('innerHTML')[[1]]
     return(data.frame(header = name, county_value = countyVal, state = stateVal))
@@ -361,10 +361,13 @@ extractHB <- function(state = "Indiana", county = "Marion")
   dfHB
   
 }
+## Notice use of suppressMessages() to get rid of warning messages that we don't need 
+## since we've fixed the issues with tryCatch()
+
 
 extractHB("Indiana", "Marion")
 extractHB("Indiana", "Hamilton")
 
 ## again, iterate over all counties in Indiana:
-dfHBList <- map(counties[1:5], function(t) {extractHB("Indiana", t)})
+dfHBList <- map(counties[1:10], function(t) {extractHB("Indiana", t)})
 
