@@ -14,7 +14,7 @@ library(stringr)
 library(dplyr)
 
 ## create remote driver server and client - using "chrome"
-remDr <- rsDriver(browser = "chrome")
+remDr <- rsDriver(browser = "chrome", chromever = "72.0.3626.69")
 
 ## NOTE: If you want to end the selenium server, you must quit RStudio
 
@@ -351,7 +351,7 @@ extractHB <- function(state = "Indiana", county = "Marion")
       countyVal <- tryCatch({suppressMessages({entries[[3]]$findChildElement(using = "css", 
                                                         "div > span")$getElementAttribute('innerHTML')[[1]]})}, error = function(e) {"not found!"})
     }
-    stateVal <- entries[[7]]$getElementAttribute('innerHTML')[[1]]
+    stateVal <- entries[[6]]$getElementAttribute('innerHTML')[[1]]
     return(data.frame(header = name, county_value = countyVal, state = stateVal))
   })
   

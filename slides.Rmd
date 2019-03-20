@@ -63,7 +63,7 @@ knitr::opts_chunk$set(echo = FALSE)
 - There is a script available for us to go through that shows how to use this API: healthDataGOVAPI.R:
 
 ## To the Script!
-- To the Script! Demo the API calls, created functions
+- To the Script! Demo the API calls, created functions...
 
 ## Scraping Static Content
 - Let's do some examples - we'll use **rvest** (sounds like harvest when you pronounce it)
@@ -83,9 +83,25 @@ knitr::opts_chunk$set(echo = FALSE)
     
 ## Scraping Dynamic Content
 - In a lot of the examples I'm interested in (scraping job postings for data scientists, extracting financial data, etc.), the content is dynamically generated as a user interacts with a web page
-- Consider the zillow website - you go to the main page, enter a city / state, or navigate directly to the city/state website, then interact with a UI to choose whether you want to rent, buy, and the characteristics / criteria you want your future abode to satisfy
+- Consider the Zillow website - you go to the main page, enter a city / state, or navigate directly to the city/state website, then interact with a UI to choose whether you want to rent, buy, and the characteristics / criteria you want your future abode to satisfy
 - This leads to a bunch of dynamic changes to the content displayed on the website occurring, i.e. it leads to dynamic content generation
 - In this case **rvest** is not an option, we need to use a more robust web scraping technology - one option is Selenium Web Driver, which has been ported into R through the RSelenium package, and is our last example we'll go through today!
 - If you want to use RSelenium, I'd first go to the following page to get RSelenium installed: 
+    - https://cran.r-project.org/web/packages/RSelenium/vignettes/
+    
+## RSelenium
+- I usually run RSelenium in R using the **rsDriver()** function
+- You'll see this in the example script
+- When this is implemented on your own machine, you may have to change the **browser** argument or the **version** argument
+- The following page is the best place to go for getting started (also linked on last slide) - covers closing the browser and stopping the server (you can also just close R to stop the server)
+- https://cran.r-project.org/web/packages/RSelenium/vignettes/basics.html
+
+## RSelenium - Let's do an Example
+- RSeleniumExample.R
+
+## Closing
+- Questions? Concerns? There is a lot to web scraping, but it's a really fun process and can save a LOT of time
+- My email: slourens2586@gmail.com - use this instead of my IU email
+
 
 
