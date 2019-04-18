@@ -3,6 +3,7 @@ title: "Interacting with Web Data using R"
 subtitle: "Web APIs and Web Scraping (including RSelenium)"
 author: "Spencer Lourens, Ph.D."
 date: "3/11/2019"
+urlcolor: blue
 output: beamer_presentation
 ---
 
@@ -77,8 +78,11 @@ knitr::opts_chunk$set(echo = FALSE)
 - The document object model, i.e. DOM, is the structure of any web page on the internet - however, some websites use iframes, and other nested structures to embed content, so you have to approach each domain on a case by case basis
 - What we do in this webinar will not automatically work on another website - BUT it will almost always work for other pages within the domain you've been learning on
 - This means that other airquality.weather.gov URLs will be simple for us to scrape now, other calls to the healthdata.gov API should be simple for us to interact with (although the API access function is rudimentary and has not been thoroughly tested - it's just a starting point for further exploration, hopefully)
+
+## XPath and CSS Selectors
 - At any rate, you can learn more at: 
     - (CSS) - https://www.w3schools.com/cssref/css_selectors.asp
+    - A more fun CSS tutorial: https://flukeout.github.io
     - (XPath) - https://www.w3schools.com/xml/xpath_intro.asp
     
 ## Scraping Dynamic Content
@@ -86,6 +90,8 @@ knitr::opts_chunk$set(echo = FALSE)
 - Consider the Zillow website - you go to the main page, enter a city / state, or navigate directly to the city/state website, then interact with a UI to choose whether you want to rent, buy, and the characteristics / criteria you want your future abode to satisfy
 - This leads to a bunch of dynamic changes to the content displayed on the website occurring, i.e. it leads to dynamic content generation
 - In this case **rvest** is not an option, we need to use a more robust web scraping technology - one option is Selenium Web Driver, which has been ported into R through the RSelenium package, and is our last example we'll go through today!
+
+## Scraping Dynamic Content
 - If you want to use RSelenium, I'd first go to the following page to get RSelenium installed: 
     - https://cran.r-project.org/web/packages/RSelenium/vignettes/
     

@@ -1,14 +1,9 @@
 ## using rvest for static web content
 library(rvest)
 
-## http://www.countyhealthrankings.org
-##
-## http://www.countyhealthrankings.org/app/texas/2018/rankings/harris/county/outcomes/overall/snapshot
-
-
 site <- read_html("https://airquality.weather.gov/probe_aq_data.php?city=Indianapolis&state=IN&Submit=Get+Guidance")
 
-//*[@id="query"]/table/tbody/tr[2]/td/table[1]/tbody/tr/td[1]/table
+## //*[@id="query"]/table/tbody/tr[2]/td/table[1]/tbody/tr/td[1]/table
 
 ## original xpath from browser - left-hand table
 site %>% html_nodes(xpath = "//*[@id='query']/table/tbody/tr[2]/td/table[1]/tbody/tr/td[1]/table")
