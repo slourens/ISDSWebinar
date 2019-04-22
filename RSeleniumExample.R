@@ -14,7 +14,7 @@ library(stringr)
 library(dplyr)
 
 ## create remote driver server and client - using "chrome"
-remDr <- rsDriver(browser = "chrome", chromever = "72.0.3626.69")
+remDr <- rsDriver(browser = "chrome", chromever = "73.0.3683.20")
 
 ## NOTE: If you want to end the selenium server, you must quit RStudio
 
@@ -82,7 +82,14 @@ rD$executeScript("jQuery('#ui-select-choices-1 > li:contains(\"Indiana\")').clic
 ## select county select input
 countySelectLink <- rD$findElement(using = "css", "#main > div.ng-scope > div > a")
 
-countySelectLink <- rD$findElement(using = "css", "#app-wrapper > div.app-header.nav.clearfix.ng-scope > div:nth-child(2) > div > a")
+## from the copy css in browser
+## main > div.ng-scope > div > a
+
+## WAIT - the countySelect can show up in one of two ways - see function below
+countySelectLink <- rD$findElement(using = "css", 
+                                   
+                                   "#app-wrapper > div.app-header.nav.clearfix.ng-scope > div:nth-child(2) > div > a")
+
 
 ## make search box visible
 countySelectLink$clickElement()
@@ -90,7 +97,7 @@ countySelectLink$clickElement()
 ## change value and update
 
 ## click the div for the county we want - more JS:
-rD$executeScript("jQuery('#ui-select-choices-3 > li:contains(\"Marion\")').click();")
+rD$executeScript("jQuery('#ui-select-choices-4 > li:contains(\"Marion\")').click();")
 
 ## now grab demographic again:
 
