@@ -2,7 +2,7 @@
 title: "Interacting with Web Data using R"
 subtitle: "Web APIs and Web Scraping (including RSelenium)"
 author: "Spencer Lourens, Ph.D."
-date: "3/11/2019"
+date: "4/22/2019"
 urlcolor: blue
 output: beamer_presentation
 ---
@@ -16,11 +16,11 @@ knitr::opts_chunk$set(echo = FALSE)
 - Web APIs
     - Example, code run through
 - Scraping static web content
-    - css selectors, xpath, demos
-    - rvest demo and example
+    - **CSS** selectors, **XPath**, demo
+    - **rvest** demo and example
 - Scraping dynamic web content
-    - Selenium web driver, and RSelenium (Selenium ported into R)
-    - Example scraping dynamic content, iteration/scaling up
+    - **Selenium** web driver, and **RSelenium** (Selenium ported into R)
+    - Example scraping dynamic content, iteration/scaling up to many pages/URLs
 
 ## Why web data?
 - In many applications, we may not have access to the data we need for an application of interest
