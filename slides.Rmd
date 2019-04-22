@@ -92,8 +92,13 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Scraping Dynamic Content
 - If you want to use RSelenium, I'd first go to the following page to get RSelenium installed: 
-    - https://cran.r-project.org/web/packages/RSelenium/vignettes/
-    
+
+\small
+
+- https://cran.r-project.org/web/packages/RSelenium/vignettes/
+
+\normalsize
+
 ## RSelenium
 - I usually run RSelenium in R using the **rsDriver()** function
 - You'll see this in the example script
