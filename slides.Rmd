@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Outline
 - Why web data?
-- Web APIs
+- Web Application Programming Interfaces (APIs)
     - Example, code run through
 - Scraping static web content
     - **CSS** selectors, **XPath**, demo
@@ -28,29 +28,28 @@ knitr::opts_chunk$set(echo = FALSE)
     - Demographic data for adjustment and comparison across counties/states
     - Historical data regarding health behaviors and outcomes in a specific time/place
 - In some settings, there are previous studies that have the data available and ready for download, but this isn't always the case
-- We might see the data online in some spot, but perhaps need to gather many data from many slightly different locations
-
+- One might see the data online on a web page, but perhaps need to gather similar data from many (hundreds, even thousands) slightly different locations
 
 ## Why web "scraping"?
 - Seems to require a LOT of copy and paste, labor (or time) intensive keystrokes/manipulations
 - How long is this going to TAKE!?!?
-- Can we somehow automate the process (i.e. automate the boring stuff), so that after we build our software, the data extraction/transformation process becomes "plug and play"?
-- This is, in my opinion, the pinacle of web scraping, and a really really fun process to engage in
-- This is also the topic of this webinar, extracting and transforming web data, either using an API provided by the data curators, or by scraping the data using "web scraping" techniques
-    - **rvest** and **RSelenium** are used for this
-- This webinar will be as interactive as possible - I'll do a lot of live demos, so cross your fingers!
+- Can we somehow automate the process (i.e. automate the boring stuff), so that after we build our software, the data extraction/transformation process happens, and we hardly notice it?
+- This is, in my opinion, the pinnacle of web scraping, and a really really fun process!
+- This is also the primary motivation for this webinar, extracting and transforming web data, either using an API provided by the site developers, or by scraping the data using **web scraping** techniques
+    - **rvest** and **RSelenium** are used for the latter
+- This webinar will be as interactive as possible - I'll do a lot of live demos, so cross your fingers
 
 ## Prelims
-- The scripts used in this presentation and the presentation (and .Rmd which generated it) are available on github:
+- The scripts used in this presentation and the presentation (including the .Rmd used to generate it) are available on github:
 - https://github.com/slourens/ISDSWebinar
 
 ## Web APIs
 - There are thousands of web APIs available over the internet for accessing data for use in our own applications
-- API - application programming interface - so basically an interace that allows YOU to program your own application utilizing external resources (data)
+- **API** - an interace that allows YOU to program your own application utilizing external resources (data), or software/code written by others
 - The R programming language comes equipped with a package called **httr** (developed by Hadley Wickham) which allows executing cURL requests (mostly GET and POST requests, and in our case just GET requests) from within R
 - Be careful, you don't NEED to recreate the wheel! 
     - Someone else might have already developed an R API for the website you're interested in
-    - Google search for "r <website name> API"
+    - Google search for "R **website name** API"
     
 ## First Example - healthdata.gov API
 - First, let's use the healthdata.gov API to extract data

@@ -34,7 +34,8 @@ descriptions <- map_chr(datasetInfo, function(t) {t$description})
 distributionInfo <- map(datasetInfo, function(t) {t$distribution})
 
 ## Find a dataset you're interested in:
-View(titles)
+View(titles) ## better to write it to a .csv
+## write.csv(titles, filePath)
 
 ## Value of care - National
 indNumber <- which(titles == "Value of care -  National")
